@@ -47,8 +47,8 @@ def get_greatest_contour(contours):
     return largest_contour
 
 # video capture source
-cap = cv2.VideoCapture("rtsp://10.66.6.101/11")
-#cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture("rtsp://10.66.6.101/11")
+cap = cv2.VideoCapture(0)
 
 # start the threaded camera stream
 t_stream = ThreadStream(cap)
@@ -74,6 +74,12 @@ while True:
 
     if frame is not None:
         draw_frame = frame.copy()
+
+        # draw to the gui frame
+        cv2.putText(draw_frame, "x: ", (10, 20), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+        cv2.putText(draw_frame, "y: ", (10, 50), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+
+        cv2.putText(draw_frame, "v: ", (10, 80), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
 
         # apply a grayscale to the frame
         grayscaled_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -119,12 +125,11 @@ while True:
             previous_x_pos = averaged_x_pos
             previous_y_pos = averaged_y_pos
 
-            # draw to the gui frame
-            cv2.putText(draw_frame, "x: " + str(averaged_x_pos), (10, 20), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
-            cv2.putText(draw_frame, "y: " + str(averaged_y_pos), (10, 50), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+            # update the gui
+            cv2.putText(draw_frame, str(averaged_x_pos), (30, 20), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+            cv2.putText(draw_frame, str(averaged_y_pos), (30, 50), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
 
-            cv2.putText(draw_frame, "vx: " + str(delta_xt), (10, 80), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
-            cv2.putText(draw_frame, "vy: " + str(delta_yt), (10, 110), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
+            cv2.putText(draw_frame, str(delta_xt), (30, 80), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 255), 2)
 
             pre_time = time.time()
 
