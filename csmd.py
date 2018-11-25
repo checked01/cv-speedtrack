@@ -46,9 +46,15 @@ def get_greatest_contour(contours):
 
     return largest_contour
 
+
+# correct for perspective
+def perspective_correction(x_pos, y_pos):
+    return
+
+
 # video capture source
-#cap = cv2.VideoCapture("rtsp://10.66.6.101/11")
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("rtsp://10.66.6.101/11")
+#cap = cv2.VideoCapture(0)
 
 # start the threaded camera stream
 t_stream = ThreadStream(cap)
